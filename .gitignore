@@ -1,0 +1,75 @@
+##############
+# temp files #
+##############
+*~
+
+###################
+# compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+############
+# archives #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+##################
+# log/data files #
+##################
+*.log
+*.sqlite
+
+#################
+# Eclipse Files #
+#################
+.classpath
+.project
+.settings
+
+######################
+# OS generated files #
+######################
+.DS_Store*
+ehthums.db
+Icon?
+Thumbs.db
+
+###############
+# Directories #
+###############
+classes/
+bin/
+
+###########
+# Android #
+###########
+.apk
+.ap_
+
+#################
+# Scratch Files #
+#################
+scratch.txt
+
+##############
+# Lein Files #
+##############
+.lein-failures
+.lein-deps-sum
+
+##############
+# Properties #
+##############
+tuneramblr.properties
