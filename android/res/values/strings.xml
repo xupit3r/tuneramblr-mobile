@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">tuneramblr</string>
+    <string name="addBtn">I like it!</string>
+    <string name="userDefStr">Enter some tags seperated by commas!</string>
+    <string name="logoDescription">tuneramblr</string>
+    <string name="takePhoto">Take Photo</string>
+    <string name="songSubmitted">The track has been submitted!</string>
+    <string name="loginBtn">Login</string>
+    <string name="usernameStr">Username</string>
+    <string name="passwordStr">Password</string>
+    <string name="trackNameStr">Track Name</string>
+    <string name="artistNameStr">Artist Name</string>
+    <string name="albumNameStr">Album Name</string>
+
+</resources>

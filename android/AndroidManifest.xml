@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tjs.tuneramblr"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="4"
+        android:targetSdkVersion="11" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <application
+        android:debuggable="true"
+        android:icon="@drawable/tr_logo"
+        android:label="@string/app_name" >
+        <activity
+            android:name="TuneramblrMobileActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".receivers.BootReceiver" >
+        </receiver>
+        <receiver android:name=".receivers.ConnectivityChangedReceiver" >
+        </receiver>
+        <receiver android:name=".receivers.LocationChangedReceiver" >
+        </receiver>
+        <receiver android:name=".receivers.PassiveLocationChangedReceiver" >
+        </receiver>
+        <receiver android:name=".receivers.NewCheckinReceiver" >
+        </receiver>
+        <receiver android:name=".receivers.PowerStateChangedReceiver" >
+        </receiver>
+        <receiver android:name=".meta.music.MetaMediaRequester" >
+            <intent-filter>
+                <!-- stock music player and google music -->
+                <action android:name="com.android.music.metachanged" />
+                <action android:name="com.android.music.playstatechanged" />
+                <action android:name="com.android.music.playbackcomplete" />
+                <action android:name="com.android.music.queuechanged" />
+
+                <!-- MIUI music player -->
+                <action android:name="com.miui.player.metachanged" />
+                <action android:name="com.miui.player.playstatechanged" />
+                <action android:name="com.miui.player.playbackcomplete" />
+                <action android:name="com.miui.player.queuechanged" />
+
+                <!-- HTC music player -->
+                <action android:name="com.htc.music.metachanged" />
+                <action android:name="com.htc.music.playstatechanged" />
+                <action android:name="com.htc.music.playbackcomplete" />
+                <action android:name="com.htc.music.queuechanged" />
+
+                <!-- WinAmp music player -->
+                <action android:name="com.nullsoft.winamp.metachanged" />
+                <action android:name="com.nullsoft.winamp.playstatechanged" />
+                <action android:name="com.nullsoft.winamp.playbackcomplete" />
+                <action android:name="com.nullsoft.winamp.queuechanged" />
+
+                <!-- MyTouch4G stock music player -->
+                <action android:name="com.real.IMP.metachanged" />
+                <action android:name="com.real.IMP.playstatechanged" />
+                <action android:name="com.real.IMP.playbackcomplete" />
+                <action android:name="com.real.IMP.queuechanged" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".services.TrackCheckinNotificationService" >
+        </service>
+        <service android:name=".services.TrackCheckinService" >
+        </service>
+        <service android:name=".services.LoginService" android:label="LoginService"></service>
+    </application>
+
+</manifest>
