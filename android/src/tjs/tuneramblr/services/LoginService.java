@@ -20,6 +20,8 @@ public class LoginService extends IntentService {
 
 	private static final String LOGIN_AUTH_RESULT = "authresult";
 
+	public static final String LOGGED_IN = "logged_in";
+
 	public LoginService() {
 		super(TAG);
 	}
@@ -28,7 +30,14 @@ public class LoginService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		// execute the login procedure
 		boolean authenticated = login(intent);
+
 		// pass this along to the right place to update the UI
+		if (authenticated) {
+			Intent loggedInIntent = new Intent();
+			loggedInIntent.setAction(LOGGED_IN);
+			getApplicationContext().sendBroadcast(loggedInIntent);
+		}
+
 	}
 
 	// attempts a login
@@ -68,9 +77,12 @@ public class LoginService extends IntentService {
 			}
 
 		} catch (IOException e) {
-			Log.e(TAG, "Whoops!  That login totally failed! " + e.getMessage());
+			Log.e(TAG,
+					"[IOException] Whoops!  That login totally failed! "
+							+ e.getMessage());
 		} catch (JSONException e) {
-			Log.e(TAG, "Whoops!  That login totally failed! " + e.getMessage());
+			Log.e(TAG, "[JSONException] Whoops!  That login totally failed! "
+					+ e.getMessage());
 		}
 
 		return retVal;

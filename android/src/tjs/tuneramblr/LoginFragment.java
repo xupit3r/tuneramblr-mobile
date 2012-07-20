@@ -42,6 +42,8 @@ public class LoginFragment extends Fragment {
 				loginServiceIntent.putExtra(
 						TuneramblrConstants.EXTRA_PASSWORD_KEY, password);
 
+				v.getContext().startService(loginServiceIntent);
+
 			}
 		});
 

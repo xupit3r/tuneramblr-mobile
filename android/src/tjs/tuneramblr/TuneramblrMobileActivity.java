@@ -12,6 +12,7 @@ import tjs.tuneramblr.meta.model.UserInfo;
 import tjs.tuneramblr.receivers.LocationChangedReceiver;
 import tjs.tuneramblr.receivers.NewCheckinReceiver;
 import tjs.tuneramblr.receivers.PassiveLocationChangedReceiver;
+import tjs.tuneramblr.services.LoginService;
 import tjs.tuneramblr.util.base.SharedPreferenceSaver;
 import android.app.Dialog;
 import android.app.NotificationManager;
@@ -87,6 +88,10 @@ public class TuneramblrMobileActivity extends FragmentActivity {
 		// set the current view
 		setContentView(R.layout.main);
 
+		// retrieve the fragments
+		checkinFragment = new CheckinFragment();
+		loginFragment = new LoginFragment();
+
 		// determine which fragment we want to show
 		UserInfoDS userInfoDs = new UserInfoDS(getApplicationContext());
 		UserInfo userInfo = null;
@@ -99,9 +104,9 @@ public class TuneramblrMobileActivity extends FragmentActivity {
 		Fragment fragment = null;
 		if ((userInfo != null) && (userInfo.getUsername() != null)
 				&& (userInfo.getPassword() != null)) {
-			fragment = new CheckinFragment();
+			fragment = checkinFragment;
 		} else {
-			fragment = new LoginFragment();
+			fragment = loginFragment;
 		}
 
 		// add the fragment to the the main layout
@@ -192,7 +197,7 @@ public class TuneramblrMobileActivity extends FragmentActivity {
 		 * The Manifest Checkin Receiver is designed to run only when the
 		 * Application isn't active to notify the user of pending checkins that
 		 * have succeeded (usually through a Notification). When the Activity is
-		 * visible we capture checkins through the checkinReceiver
+		 * visible we capture checkins through the checkinReceiver.
 		 */
 		packageManager.setComponentEnabledSetting(newCheckinReceiverName,
 				PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
@@ -202,12 +207,12 @@ public class TuneramblrMobileActivity extends FragmentActivity {
 		// Activity is visible.
 		registerReceiver(checkinReceiver, newCheckinFilter);
 
+		// update UI receiver
+		registerReceiver(loginReceiver,
+				new IntentFilter(LoginService.LOGGED_IN));
+
 		// Cancel notifications.
 		notificationManager.cancel(TuneramblrConstants.CHECKIN_NOTIFICATION);
-
-		// Update the CheckinFragment with the last checkin.
-		updateCheckinFragment(prefs.getString(
-				TuneramblrConstants.SP_KEY_LAST_CHECKIN_ID, null));
 
 		// Get the last known location (and optionally request location updates)
 		// and
@@ -224,18 +229,19 @@ public class TuneramblrMobileActivity extends FragmentActivity {
 				true);
 		sharedPreferenceSaver.savePreferences(prefsEditor, false);
 
-		// Enable the Manifest Checkin Receiver when the Activity isn't active.
-		// The Manifest Checkin Receiver is designed to run only when the
-		// Application
-		// isn't active to notify the user of pending checkins that have
-		// succeeded
-		// (usually through a Notification).
+		/*
+		 * Enable the Manifest Checkin Receiver when the Activity isn't active.
+		 * The Manifest Checkin Receiver is designed to run only when the
+		 * Application isn't active to notify the user of pending checkins that
+		 * have succeeded (usually through a Notification).
+		 */
 		packageManager.setComponentEnabledSetting(newCheckinReceiverName,
 				PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
 				PackageManager.DONT_KILL_APP);
 
 		// Unregister the checkinReceiver when the Activity is inactive.
 		unregisterReceiver(checkinReceiver);
+		unregisterReceiver(loginReceiver);
 
 		// Stop listening for location updates when the Activity is inactive.
 		disableLocationUpdates();
@@ -500,10 +506,23 @@ public class TuneramblrMobileActivity extends FragmentActivity {
 	protected BroadcastReceiver checkinReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			String id = intent.getStringExtra(TuneramblrConstants.EXTRA_KEY_ID);
-			if (id != null) {
-				// update track fragment with last details of track checkins
-			}
+			// TODO: do something
+		}
+	};
+
+	/**
+	 * Receiver that listens for logins when the Activity is visible.
+	 */
+	protected BroadcastReceiver loginReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// remove the login fragment
+			getSupportFragmentManager().beginTransaction()
+					.remove(loginFragment).commit();
+
+			// add the checkin fragment
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.fragment_container, checkinFragment).commit();
 		}
 	};
 

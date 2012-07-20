@@ -23,7 +23,7 @@ public class TuneramblrUrlHelper {
 	private static final String QUERY_SEP = "&";
 
 	/* the base songmap URL */
-	private static final String TUNERAMBLR_BASE_URL = "tuneramblr.com";
+	private static final String TUNERAMBLR_BASE_URL = "tuneramblr.herokuapp.com";
 
 	/* some other important locations (relative) */
 	private static final String TUNERAMBLR_ADD_SONG_URL = "/mobile/songs/add";
@@ -75,7 +75,7 @@ public class TuneramblrUrlHelper {
 		URI builtUrl = null;
 		try {
 			builtUrl = URIUtils.createURI(PROTOCOL_HTTP, TUNERAMBLR_BASE_URL,
-					NO_PORT, TUNERAMBLR_ADD_SONG_URL, null, null);
+					NO_PORT, TUNERAMBLR_LOGIN_URL, null, null);
 		} catch (URISyntaxException e) {
 			builtUrl = null;
 		}
@@ -103,9 +103,9 @@ public class TuneramblrUrlHelper {
 			long currentTime) {
 		URI builtUrl = null;
 
-		String queryString = buildAddSongQueryString(userLocation, trackName, artist,
-				album, genre, localWeather, userDef, username, password, img,
-				currentTime);
+		String queryString = buildAddSongQueryString(userLocation, trackName,
+				artist, album, genre, localWeather, userDef, username,
+				password, img, currentTime);
 
 		try {
 			builtUrl = URIUtils.createURI(PROTOCOL_HTTP, TUNERAMBLR_BASE_URL,
@@ -148,10 +148,10 @@ public class TuneramblrUrlHelper {
 	 *            against the track
 	 * @return
 	 */
-	public String buildAddSongQueryString(Location userLocation, String trackName,
-			String artist, String album, String genre, Weather localWeather,
-			String[] userDef, String username, String password, String img,
-			long currentTime) {
+	public String buildAddSongQueryString(Location userLocation,
+			String trackName, String artist, String album, String genre,
+			Weather localWeather, String[] userDef, String username,
+			String password, String img, long currentTime) {
 
 		// time to build the query string
 		StringBuilder queryBuilder = new StringBuilder();
