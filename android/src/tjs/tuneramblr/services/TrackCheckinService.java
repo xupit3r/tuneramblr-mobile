@@ -120,9 +120,6 @@ public class TrackCheckinService extends IntentService {
 			// this assumes that the user def input is CSV string
 			String[] userDef = userDefString.split(",");
 
-			// TODO: store the tags locally for suggestion to the user in the
-			// future
-
 			// build a metadata manager
 			MetadataManager metaManager = new MetadataManager();
 

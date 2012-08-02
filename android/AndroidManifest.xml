@@ -29,7 +29,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+		
+        <!-- RECEIVERS -->
         <receiver android:name=".receivers.BootReceiver" >
         </receiver>
         <receiver android:name=".receivers.ConnectivityChangedReceiver" >
@@ -44,6 +45,7 @@
         </receiver>
         <receiver android:name=".meta.music.MetaMediaRequester" >
             <intent-filter>
+
                 <!-- stock music player and google music -->
                 <action android:name="com.android.music.metachanged" />
                 <action android:name="com.android.music.playstatechanged" />
@@ -75,12 +77,52 @@
                 <action android:name="com.real.IMP.queuechanged" />
             </intent-filter>
         </receiver>
-
+        <receiver android:name=".receivers.tracks.MetaChangedReceiver" >
+            <intent-filter>
+                <action android:name="com.android.music.metachanged" />
+                <action android:name="com.miui.player.metachanged" />
+                <action android:name="com.htc.music.metachanged" />
+                <action android:name="com.nullsoft.winamp.metachanged" />
+                <action android:name="com.real.IMP.metachanged" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receivers.tracks.PlaybackCompleteReceiver" >
+            <intent-filter>
+                <action android:name="com.android.music.playbackcomplete" />
+                <action android:name="com.miui.player.playbackcomplete" />
+                <action android:name="com.htc.music.playbackcomplete" />
+                <action android:name="com.nullsoft.winamp.playbackcomplete" />
+                <action android:name="com.real.IMP.playbackcomplete" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receivers.tracks.PlayStateChangedReceiver" >
+            <intent-filter>
+                <action android:name="com.android.music.playstatechanged" />
+                <action android:name="com.miui.player.playstatechanged" />
+                <action android:name="com.htc.music.playstatechanged" />
+                <action android:name="com.nullsoft.winamp.playstatechanged" />
+                <action android:name="com.real.IMP.playstatechanged" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receivers.tracks.QueueChangedReceiver" >
+            <intent-filter>
+                <action android:name="com.android.music.queuechanged" />
+                <action android:name="com.miui.player.queuechanged" />
+                <action android:name="com.htc.music.queuechanged" />
+                <action android:name="com.nullsoft.winamp.queuechanged" />
+                <action android:name="com.real.IMP.queuechanged" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- SERVICES -->
         <service android:name=".services.TrackCheckinNotificationService" >
         </service>
         <service android:name=".services.TrackCheckinService" >
         </service>
-        <service android:name=".services.LoginService" android:label="LoginService"></service>
+        <service
+            android:name=".services.LoginService"
+            android:label="LoginService" >
+        </service>
     </application>
 
 </manifest>

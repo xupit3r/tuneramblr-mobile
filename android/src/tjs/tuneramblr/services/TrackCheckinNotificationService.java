@@ -17,8 +17,8 @@
 package tjs.tuneramblr.services;
 
 import tjs.tuneramblr.R;
-import tjs.tuneramblr.TuneramblrMobileActivity;
 import tjs.tuneramblr.TuneramblrConstants;
+import tjs.tuneramblr.TuneramblrMobileActivity;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -49,10 +49,6 @@ public class TrackCheckinNotificationService extends IntentService {
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 	}
 
-	/**
-	 * {@inheritDoc} Extract the name of the venue based on the ID specified in
-	 * the broadcast Checkin Intent and use it to display a Notification.
-	 */
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		// pull the message from the intent
