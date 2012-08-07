@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 
 import org.apache.http.client.utils.URIUtils;
 
+import tjs.tuneramblr.meta.model.CheckinType;
 import tjs.tuneramblr.meta.model.Weather;
 import android.location.Location;
 
@@ -84,28 +85,42 @@ public class TuneramblrUrlHelper {
 	}
 
 	/**
+	 * Builds an "add" song URI given the set of desired parameters.
 	 * 
 	 * @param userLocation
+	 *            the user's current location (i.e. where the track was
+	 *            recorded)
 	 * @param trackName
+	 *            the name of the track being recorded
 	 * @param artist
+	 *            the artist of the track
 	 * @param album
-	 * @param genre
+	 *            the album on which the track appears
 	 * @param localWeather
+	 *            the weather when the track was recorded
 	 * @param userDef
+	 *            any user defined tags to be associated with the track
 	 * @param username
+	 *            the username of the user
 	 * @param password
+	 *            the password of the user
 	 * @param img
-	 * @return
+	 *            a string representation of the image that is being recorded
+	 *            against the track
+	 * @param checkinType
+	 *            the type of the checking user/passive (skipped track, listened
+	 *            to the whole thing, etc.)
+	 * @return a valid URI for adding a song with the supplied parameters
 	 */
 	public URI buildAddSongHttpUrl(Location userLocation, String trackName,
-			String artist, String album, String genre, Weather localWeather,
+			String artist, String album, Weather localWeather,
 			String[] userDef, String username, String password, String img,
-			long currentTime) {
+			long currentTime, CheckinType checkinType) {
 		URI builtUrl = null;
 
 		String queryString = buildAddSongQueryString(userLocation, trackName,
-				artist, album, genre, localWeather, userDef, username,
-				password, img, currentTime);
+				artist, album, localWeather, userDef, username, password, img,
+				currentTime, checkinType);
 
 		try {
 			builtUrl = URIUtils.createURI(PROTOCOL_HTTP, TUNERAMBLR_BASE_URL,
@@ -133,8 +148,6 @@ public class TuneramblrUrlHelper {
 	 *            the artist of the track
 	 * @param album
 	 *            the album on which the track appears
-	 * @param genre
-	 *            the genre of the track
 	 * @param localWeather
 	 *            the weather when the track was recorded
 	 * @param userDef
@@ -146,12 +159,16 @@ public class TuneramblrUrlHelper {
 	 * @param img
 	 *            a string representation of the image that is being recorded
 	 *            against the track
-	 * @return
+	 * @param checkinType
+	 *            the type of the checking user/passive (skipped track, listened
+	 *            to the whole thing, etc.)
+	 * @return a query string representing the set of supplied parameters
 	 */
 	public String buildAddSongQueryString(Location userLocation,
-			String trackName, String artist, String album, String genre,
+			String trackName, String artist, String album,
 			Weather localWeather, String[] userDef, String username,
-			String password, String img, long currentTime) {
+			String password, String img, long currentTime,
+			CheckinType checkinType) {
 
 		// time to build the query string
 		StringBuilder queryBuilder = new StringBuilder();
@@ -164,7 +181,6 @@ public class TuneramblrUrlHelper {
 		addQueryPair(queryBuilder, "title", trackName, !last);
 		addQueryPair(queryBuilder, "artist", artist, !last);
 		addQueryPair(queryBuilder, "album", album, !last);
-		addQueryPair(queryBuilder, "genre", genre, !last);
 		addQueryPair(queryBuilder, "weather", localWeather.toString(), !last);
 
 		addQueryPair(queryBuilder, "userdef", buildUserDefParam(userDef), !last);
@@ -173,7 +189,8 @@ public class TuneramblrUrlHelper {
 		addQueryPair(queryBuilder, "password", password, !last);
 
 		addQueryPair(queryBuilder, "img", img, !last);
-		addQueryPair(queryBuilder, "tstamp", String.valueOf(currentTime), last);
+		addQueryPair(queryBuilder, "tstamp", String.valueOf(currentTime), !last);
+		addQueryPair(queryBuilder, "ctype", checkinType.toValue(), !last);
 
 		return queryBuilder.toString();
 	}

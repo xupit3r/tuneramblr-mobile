@@ -4,9 +4,11 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import tjs.tuneramblr.data.TrackInfoDS;
 import tjs.tuneramblr.meta.MetadataManager;
 import tjs.tuneramblr.meta.location.base.ILastLocationFinder;
 import tjs.tuneramblr.meta.location.utils.PlatformSpecificImplementationFactory;
+import tjs.tuneramblr.meta.model.CheckinType;
 import tjs.tuneramblr.meta.model.TrackInfo;
 import tjs.tuneramblr.meta.music.MetaMediaRequester;
 import tjs.tuneramblr.services.TrackCheckinService;
@@ -90,6 +92,8 @@ public class CheckinFragment extends Fragment {
 				// we will be grabbing the rest of the stuff automatically
 				String userDefString = userDefText.getText().toString();
 
+				TrackInfoDS tids = new TrackInfoDS(v.getContext());
+
 				// Commit any queued checkins now that we have connectivity
 				Intent trackCheckinIntent = new Intent(v.getContext(),
 						TrackCheckinService.class);
@@ -102,12 +106,16 @@ public class CheckinFragment extends Fragment {
 								.getLastBestLocation(
 										TuneramblrConstants.MAX_DISTANCE,
 										TuneramblrConstants.MAX_TIME));
+				trackCheckinIntent.putExtra(
+						TuneramblrConstants.EXTRA_TRACK_CHECKIN_TYPE_KEY,
+						CheckinType.USER_LIKE);
+				trackCheckinIntent.putExtra(
+						TuneramblrConstants.EXTRA_TRACK_INFO_KEY,
+						tids.getLastRecordedTrack());
 
 				v.getContext().startService(trackCheckinIntent);
 
 				// notify the user that the track has been sent
-				// ok so we were able to communicate with the server, show the
-				// user the message that we got back
 				Toast songResultText = Toast.makeText(v.getContext(),
 						R.string.songSubmitted, Toast.LENGTH_LONG);
 				songResultText.show();

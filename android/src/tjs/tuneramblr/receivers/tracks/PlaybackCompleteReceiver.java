@@ -1,11 +1,12 @@
 package tjs.tuneramblr.receivers.tracks;
 
-import android.content.BroadcastReceiver;
+import tjs.tuneramblr.meta.model.CheckinType;
+import tjs.tuneramblr.meta.model.TrackInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-public class PlaybackCompleteReceiver extends BroadcastReceiver {
+public class PlaybackCompleteReceiver extends PassiveTrackReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -13,7 +14,9 @@ public class PlaybackCompleteReceiver extends BroadcastReceiver {
 		String currentAlbum = intent.getStringExtra("album");
 		String currentTrack = intent.getStringExtra("track");
 
-		// DO SOME AWESOME STUFF HERE!
+		// the whole track was listened to.
+		submitTrack(context, new TrackInfo(currentArtist, currentAlbum,
+				currentTrack), CheckinType.FULLY_LISTENED);
 	}
 
 	/**
@@ -28,16 +31,16 @@ public class PlaybackCompleteReceiver extends BroadcastReceiver {
 		iF.addAction("com.android.music.playbackcomplete");
 
 		// MIUI music player
-		iF.addAction("com.miui.player.playstatechanged");
+		iF.addAction("com.miui.player.playbackcomplete");
 
 		// HTC music player
-		iF.addAction("com.htc.music.playstatechanged");
+		iF.addAction("com.htc.music.playbackcomplete");
 
 		// WinAmp music player
-		iF.addAction("com.nullsoft.winamp.playstatechanged");
+		iF.addAction("com.nullsoft.winamp.playbackcomplete");
 
 		// MyTouch4G stock music player
-		iF.addAction("com.real.IMP.playstatechanged");
+		iF.addAction("com.real.IMP.playbackcomplete");
 
 		return iF;
 	}

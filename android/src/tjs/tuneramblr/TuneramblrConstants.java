@@ -87,6 +87,8 @@ public class TuneramblrConstants {
 	public static String EXTRA_USEDEF_KEY = "userdef";
 	public static String EXTRA_IMG_URI_KEY = "imguri";
 	public static String EXTRA_LOCATION_KEY = "user_location";
+	public static String EXTRA_TRACK_CHECKIN_TYPE_KEY = "checkin_type";
+	public static String EXTRA_TRACK_INFO_KEY = "track_info";
 	public static String EXTRA_CHECKIN_NOTIFICATION_KEY = "checkin_notification";
 	public static String EXTRA_USERNAME_KEY = "tuneramblr.username";
 	public static String EXTRA_PASSWORD_KEY = "tuneramblr.password";

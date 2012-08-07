@@ -12,6 +12,7 @@ import tjs.tuneramblr.meta.MetadataManager;
 import tjs.tuneramblr.meta.img.BasicImageRequester;
 import tjs.tuneramblr.meta.img.ImageRequester;
 import tjs.tuneramblr.meta.location.utils.PlatformSpecificImplementationFactory;
+import tjs.tuneramblr.meta.model.CheckinType;
 import tjs.tuneramblr.meta.model.TrackInfo;
 import tjs.tuneramblr.meta.model.UserInfo;
 import tjs.tuneramblr.meta.model.Weather;
@@ -103,9 +104,6 @@ public class TrackCheckinService extends IntentService {
 		CheckinResult result = null;
 		try {
 
-			// necessary?
-			String genre = "genre";
-
 			// pull content out of the intents
 			String userDefString = intent
 					.getStringExtra(TuneramblrConstants.EXTRA_USEDEF_KEY);
@@ -113,6 +111,10 @@ public class TrackCheckinService extends IntentService {
 					.getParcelableExtra(TuneramblrConstants.EXTRA_IMG_URI_KEY);
 			Location userLocation = intent
 					.getParcelableExtra(TuneramblrConstants.EXTRA_LOCATION_KEY);
+			CheckinType checkinType = (CheckinType) intent
+					.getSerializableExtra(TuneramblrConstants.EXTRA_TRACK_CHECKIN_TYPE_KEY);
+			TrackInfo trackInfo = intent
+					.getParcelableExtra(TuneramblrConstants.EXTRA_TRACK_INFO_KEY);
 
 			// I want to also grab the time
 			long currentTime = System.currentTimeMillis();
@@ -122,10 +124,6 @@ public class TrackCheckinService extends IntentService {
 
 			// build a metadata manager
 			MetadataManager metaManager = new MetadataManager();
-
-			// pull the track info
-			TrackInfo trackInfo = metaManager
-					.getTrackInfo(getApplicationContext());
 
 			// don't even bother with the rest of this stuff if
 			// we were unable to retrieve the track information
@@ -169,9 +167,9 @@ public class TrackCheckinService extends IntentService {
 					if (addSongUri != null) {
 						String queryString = TuneramblrUrlHelper.getInstance()
 								.buildAddSongQueryString(userLocation,
-										trackName, artist, album, genre,
-										localWeather, userDef, username,
-										password, imgStr, currentTime);
+										trackName, artist, album, localWeather,
+										userDef, username, password, imgStr,
+										currentTime, checkinType);
 						String responseString = HttpUtil.getInstance()
 								.makePost(addSongUri, queryString);
 

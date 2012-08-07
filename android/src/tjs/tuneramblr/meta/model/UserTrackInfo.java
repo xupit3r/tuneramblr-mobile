@@ -1,12 +1,16 @@
 package tjs.tuneramblr.meta.model;
 
+import java.io.Serializable;
+
 import android.location.Location;
 
 /**
  * Representation of data to be passively collected based on user's interaction
  * with the multimedia player.
  */
-public class UserTrackInfo {
+public class UserTrackInfo implements Serializable {
+
+	private static final long serialVersionUID = -6140782012533256290L;
 
 	private Location location;
 	private Weather weather;
