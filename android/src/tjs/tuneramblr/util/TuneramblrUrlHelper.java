@@ -190,7 +190,7 @@ public class TuneramblrUrlHelper {
 
 		addQueryPair(queryBuilder, "img", img, !last);
 		addQueryPair(queryBuilder, "tstamp", String.valueOf(currentTime), !last);
-		addQueryPair(queryBuilder, "ctype", checkinType.toValue(), !last);
+		addQueryPair(queryBuilder, "ctype", checkinType.toValue(), last);
 
 		return queryBuilder.toString();
 	}

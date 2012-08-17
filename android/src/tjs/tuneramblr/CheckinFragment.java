@@ -29,7 +29,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +44,7 @@ public class CheckinFragment extends Fragment {
 	protected Handler handler = new Handler();
 	protected Activity activity;
 
-	// the user defined properties text object in the view
-	protected EditText userDefText;
+	// some UI elements
 	protected Button addSongButton;
 	protected Button takePhotoButton;
 	protected TextView trackNameText;
@@ -69,7 +67,6 @@ public class CheckinFragment extends Fragment {
 		View view = inflater.inflate(R.layout.checkin, container, false);
 
 		// get a handle on the UI elements
-		userDefText = (EditText) view.findViewById(R.id.userDefInput);
 		addSongButton = (Button) view.findViewById(R.id.addButton);
 		takePhotoButton = (Button) view.findViewById(R.id.takePhotoBtn);
 		trackNameText = (TextView) view.findViewById(R.id.trackNameText);
@@ -90,11 +87,12 @@ public class CheckinFragment extends Fragment {
 
 				// this is the only thing coming from the UI at the moment
 				// we will be grabbing the rest of the stuff automatically
-				String userDefString = userDefText.getText().toString();
+				// FIXME: what do I want to do about this feature?
+				String userDefString = "";
 
 				TrackInfoDS tids = new TrackInfoDS(v.getContext());
 
-				// Commit any queued checkins now that we have connectivity
+				// build an Intent to send over to the checkin service
 				Intent trackCheckinIntent = new Intent(v.getContext(),
 						TrackCheckinService.class);
 				trackCheckinIntent.putExtra(
@@ -109,9 +107,12 @@ public class CheckinFragment extends Fragment {
 				trackCheckinIntent.putExtra(
 						TuneramblrConstants.EXTRA_TRACK_CHECKIN_TYPE_KEY,
 						CheckinType.USER_LIKE);
+
+				tids.open();
 				trackCheckinIntent.putExtra(
 						TuneramblrConstants.EXTRA_TRACK_INFO_KEY,
 						tids.getLastRecordedTrack());
+				tids.close();
 
 				v.getContext().startService(trackCheckinIntent);
 
@@ -119,9 +120,6 @@ public class CheckinFragment extends Fragment {
 				Toast songResultText = Toast.makeText(v.getContext(),
 						R.string.songSubmitted, Toast.LENGTH_LONG);
 				songResultText.show();
-
-				// clear the text field
-				userDefText.setText("");
 
 				// clear the image URI
 				imageUri = null;
@@ -144,7 +142,6 @@ public class CheckinFragment extends Fragment {
 			/** Create a File for saving an image */
 			public File buildOutputMediaFile() {
 
-				// TODO: check if SD card is mounted
 				File mediaStorageDir = new File(
 						Environment
 								.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),

@@ -15,21 +15,20 @@ public final class R {
         public static final int tr_logo=0x7f020001;
     }
     public static final class id {
-        public static final int addButton=0x7f050002;
-        public static final int albumNameText=0x7f050006;
-        public static final int artistNameText=0x7f050005;
+        public static final int addButton=0x7f050001;
+        public static final int albumNameText=0x7f050005;
+        public static final int artistNameText=0x7f050004;
         public static final int checkin_fragment=0x7f050000;
-        public static final int fragment_container=0x7f05000e;
-        public static final int imageView1=0x7f050009;
-        public static final int loginButton=0x7f050008;
-        public static final int login_fragment=0x7f050007;
-        public static final int passwordInput=0x7f05000b;
-        public static final int takePhotoBtn=0x7f050001;
-        public static final int textView1=0x7f05000d;
-        public static final int trackNameText=0x7f050004;
-        public static final int userDefInput=0x7f050003;
-        public static final int usernameInput=0x7f05000a;
-        public static final int usernameLabel=0x7f05000c;
+        public static final int fragment_container=0x7f05000d;
+        public static final int imageView1=0x7f050008;
+        public static final int loginButton=0x7f050007;
+        public static final int login_fragment=0x7f050006;
+        public static final int passwordInput=0x7f05000a;
+        public static final int takePhotoBtn=0x7f050002;
+        public static final int textView1=0x7f05000c;
+        public static final int trackNameText=0x7f050003;
+        public static final int usernameInput=0x7f050009;
+        public static final int usernameLabel=0x7f05000b;
     }
     public static final class layout {
         public static final int checkin=0x7f030000;

@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class TrackInfoDS {
 
@@ -62,6 +63,8 @@ public class TrackInfoDS {
 	 *         not a last recorded track
 	 */
 	public TrackInfo getLastRecordedTrack() {
+		Log.i("TrackInfoDS", (db == null) ? "db is null"
+				: "what the hell is null?");
 		Cursor cursor = db.query(TrackDataHelper.TRACK_INFO_TABLE_NAME,
 				returnColumns, null, null, null, null,
 				TrackDataHelper.TIMESTAMP_COL + " desc ", "1");

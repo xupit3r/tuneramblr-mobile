@@ -6,15 +6,6 @@
     android:gravity="center" >
 
     <Button
-        android:id="@+id/takePhotoBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/addButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="44dp"
-        android:text="@string/takePhoto" />
-
-    <Button
         android:id="@+id/addButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -23,21 +14,22 @@
         android:layout_marginBottom="16dp"
         android:text="@string/addBtn" />
 
-    <EditText
-        android:id="@+id/userDefInput"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/takePhotoBtn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:hint="@string/userDefStr"
-        android:inputType="textMultiLine" />
+        android:layout_above="@+id/addButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="96dp"
+        android:text="@string/takePhoto" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/takePhotoBtn"
-        android:layout_marginTop="52dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="83dp"
+        android:gravity="center"
         android:orientation="vertical" >
 
         <TextView

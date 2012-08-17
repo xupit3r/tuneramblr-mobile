@@ -1,18 +1,30 @@
 package tjs.tuneramblr.receivers.tracks;
 
+import tjs.tuneramblr.meta.model.CheckinType;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 public class MetaChangedReceiver extends PassiveTrackReceiver {
 
+	private static final String TAG = "MetaChangedReceiver";
+
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		String currentArtist = intent.getStringExtra("artist");
-		String currentAlbum = intent.getStringExtra("album");
-		String currentTrack = intent.getStringExtra("track");
+		Log.i(TAG, "Received some track info: "
+				+ pullTrackInfoFromIntent(intent));
 
-		// DO SOME AWESOME STUFF HERE!
+		String command = pullCommandFromIntent(intent);
+		for (String key : intent.getExtras().keySet()) {
+			Log.i(TAG, key + " = " + intent.getExtras().get(key));
+		}
+		Log.i(TAG, "Command: " + command);
+		if (CMD_NEXT.equals(command)) {
+			// we skipped this track, record it!
+			submitTrack(context, pullTrackInfoFromIntent(intent),
+					CheckinType.SKIP);
+		}
 	}
 
 	/**
@@ -23,20 +35,13 @@ public class MetaChangedReceiver extends PassiveTrackReceiver {
 	public static IntentFilter buildMetaChangedFilter() {
 		IntentFilter iF = new IntentFilter();
 
-		// stock music player and Google music
 		iF.addAction("com.android.music.metachanged");
-
-		// MIUI music player
 		iF.addAction("com.miui.player.metachanged");
-
-		// HTC music player
 		iF.addAction("com.htc.music.metachanged");
-
-		// WinAmp music player
 		iF.addAction("com.nullsoft.winamp.metachanged");
-
-		// MyTouch4G stock music player
 		iF.addAction("com.real.IMP.metachanged");
+		iF.addAction("com.amazon.mp3.metachanged");
+		iF.addAction("com.rdio.android.metachanged");
 
 		return iF;
 	}

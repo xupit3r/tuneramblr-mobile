@@ -3,16 +3,19 @@ package tjs.tuneramblr.receivers.tracks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 public class QueueChangedReceiver extends PassiveTrackReceiver {
 
+	private static final String TAG = "QueueChangedReceiver";
+
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		String currentArtist = intent.getStringExtra("artist");
-		String currentAlbum = intent.getStringExtra("album");
-		String currentTrack = intent.getStringExtra("track");
-
-		// DO SOME AWESOME STUFF HERE!
+		Log.i(TAG, "Received some track info: "
+				+ pullTrackInfoFromIntent(intent));
+		for (String key : intent.getExtras().keySet()) {
+			Log.i(TAG, key + " = " + intent.getExtras().get(key));
+		}
 	}
 
 	/**
@@ -23,20 +26,13 @@ public class QueueChangedReceiver extends PassiveTrackReceiver {
 	public static IntentFilter buildQueueChangedFilter() {
 		IntentFilter iF = new IntentFilter();
 
-		// stock music player and google music
 		iF.addAction("com.android.music.queuechanged");
-
-		// MIUI music player
 		iF.addAction("com.miui.player.queuechanged");
-
-		// HTC music player
 		iF.addAction("com.htc.music.queuechanged");
-
-		// WinAmp music player
 		iF.addAction("com.nullsoft.winamp.queuechanged");
-
-		// MyTouch4G stock music player
 		iF.addAction("com.real.IMP.queuechanged");
+		iF.addAction("com.amazon.mp3.queuechanged");
+		iF.addAction("com.rdio.android.queuechanged");
 
 		return iF;
 	}

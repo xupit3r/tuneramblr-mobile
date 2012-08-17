@@ -1,18 +1,30 @@
 package tjs.tuneramblr.receivers.tracks;
 
+import tjs.tuneramblr.meta.model.CheckinType;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 public class PlayStateChangedReceiver extends PassiveTrackReceiver {
 
+	private static final String TAG = "PlayStateChangedReceiver";
+
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		String currentArtist = intent.getStringExtra("artist");
-		String currentAlbum = intent.getStringExtra("album");
-		String currentTrack = intent.getStringExtra("track");
 
-		// DO SOME AWESOME STUFF HERE!
+		Log.i(TAG, "received some track info: "
+				+ pullTrackInfoFromIntent(intent));
+
+		String command = pullCommandFromIntent(intent);
+		if (CMD_NEXT.equals(command)) {
+			// we skipped this track, record it!
+			submitTrack(context, pullTrackInfoFromIntent(intent),
+					CheckinType.SKIP);
+		}
+
+		// TODO: add support for repeat
+
 	}
 
 	/**
@@ -23,20 +35,13 @@ public class PlayStateChangedReceiver extends PassiveTrackReceiver {
 	public static IntentFilter buildPlayStateChangedFilter() {
 		IntentFilter iF = new IntentFilter();
 
-		// stock music player and google music
 		iF.addAction("com.android.music.playstatechanged");
-
-		// MIUI music player
 		iF.addAction("com.miui.player.playstatechanged");
-
-		// HTC music player
 		iF.addAction("com.htc.music.playstatechanged");
-
-		// WinAmp music player
 		iF.addAction("com.nullsoft.winamp.playstatechanged");
-
-		// MyTouch4G stock music player
 		iF.addAction("com.real.IMP.playstatechanged");
+		iF.addAction("com.amazon.mp3.playstatechanged");
+		iF.addAction("com.rdio.android.playstatechanged");
 
 		return iF;
 	}

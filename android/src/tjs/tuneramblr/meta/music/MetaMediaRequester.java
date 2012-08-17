@@ -62,7 +62,17 @@ public class MetaMediaRequester extends BroadcastReceiver {
 		iF.addAction("com.real.IMP.playbackcomplete");
 		iF.addAction("com.real.IMP.queuechanged");
 
-		// TODO: figure out how to get this stuff out of Amazon MP3...
+		// Amazon MP3
+		iF.addAction("com.amazon.mp3.metachanged");
+		iF.addAction("com.amazon.mp3.playstatechanged");
+		iF.addAction("com.amazon.mp3.playbackcomplete");
+		iF.addAction("com.amazon.mp3.queuechanged");
+
+		// rdio
+		iF.addAction("com.rdio.android.metachanged");
+		iF.addAction("com.rdio.android.playstatechanged");
+		iF.addAction("com.rdio.android.playbackcomplete");
+		iF.addAction("com.rdio.android.queuechanged");
 
 		return iF;
 	}

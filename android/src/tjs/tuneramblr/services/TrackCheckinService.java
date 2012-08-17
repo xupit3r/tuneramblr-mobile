@@ -11,24 +11,15 @@ import tjs.tuneramblr.data.UserInfoDS;
 import tjs.tuneramblr.meta.MetadataManager;
 import tjs.tuneramblr.meta.img.BasicImageRequester;
 import tjs.tuneramblr.meta.img.ImageRequester;
-import tjs.tuneramblr.meta.location.utils.PlatformSpecificImplementationFactory;
 import tjs.tuneramblr.meta.model.CheckinType;
 import tjs.tuneramblr.meta.model.TrackInfo;
 import tjs.tuneramblr.meta.model.UserInfo;
 import tjs.tuneramblr.meta.model.Weather;
 import tjs.tuneramblr.util.HttpUtil;
 import tjs.tuneramblr.util.TuneramblrUrlHelper;
-import tjs.tuneramblr.util.base.SharedPreferenceSaver;
-import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.PendingIntent;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.location.Location;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.util.Log;
 
@@ -42,14 +33,6 @@ public class TrackCheckinService extends IntentService {
 
 	protected static String TAG = "TrackCheckinService";
 
-	protected ContentResolver contentResolver;
-	protected ConnectivityManager cm;
-	protected AlarmManager alarmManager;
-	protected PendingIntent retryQueuedCheckinsPendingIntent;
-	protected SharedPreferences sharedPreferences;
-	protected Editor sharedPreferencesEditor;
-	protected SharedPreferenceSaver sharedPreferenceSaver;
-
 	public TrackCheckinService() {
 		super(TAG);
 	}
@@ -57,21 +40,8 @@ public class TrackCheckinService extends IntentService {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		contentResolver = getContentResolver();
-		cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-		sharedPreferences = getSharedPreferences(
-				TuneramblrConstants.SHARED_PREFERENCE_FILE,
-				Context.MODE_PRIVATE);
-		sharedPreferencesEditor = sharedPreferences.edit();
-		sharedPreferenceSaver = PlatformSpecificImplementationFactory
-				.getSharedPreferenceSaver(this);
-
-		Intent retryIntent = new Intent(
-				TuneramblrConstants.RETRY_QUEUED_CHECKINS_ACTION);
-		retryQueuedCheckinsPendingIntent = PendingIntent.getBroadcast(this, 0,
-				retryIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		// nadda
 	}
 
 	/**
