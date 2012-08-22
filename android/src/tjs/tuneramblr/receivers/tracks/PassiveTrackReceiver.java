@@ -61,8 +61,7 @@ public abstract class PassiveTrackReceiver extends BroadcastReceiver {
 						TuneramblrConstants.MAX_DISTANCE,
 						TuneramblrConstants.MAX_TIME));
 		trackCheckinIntent.putExtra(
-				TuneramblrConstants.EXTRA_TRACK_CHECKIN_TYPE_KEY,
-				CheckinType.USER_LIKE);
+				TuneramblrConstants.EXTRA_TRACK_CHECKIN_TYPE_KEY, checkinType);
 		trackCheckinIntent.putExtra(TuneramblrConstants.EXTRA_TRACK_INFO_KEY,
 				trackInfo);
 		context.startService(trackCheckinIntent);
