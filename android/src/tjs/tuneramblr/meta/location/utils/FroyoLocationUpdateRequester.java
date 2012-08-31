@@ -26,6 +26,7 @@ import android.location.LocationManager;
  * for the Froyo release. Includes use of the Passive Location Provider.
  * 
  * Uses broadcast Intents to notify the app of location changes.
+ * 
  */
 public class FroyoLocationUpdateRequester extends LocationRequester {
 

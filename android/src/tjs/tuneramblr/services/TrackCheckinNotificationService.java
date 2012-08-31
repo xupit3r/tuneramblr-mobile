@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Google Inc.
+ * Copyright 2012 Joe D'Alessandro
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package tjs.tuneramblr.services;
 
 import tjs.tuneramblr.R;
@@ -23,18 +22,20 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 
 /**
  * Service to provide notification of the result of the song addition.
+ * 
+ * Portions of the code that follows was adapted from code samples found at:
+ * http://blog.radioactiveyak.com/2011/06/deep-dive-into-location-part-2-being
+ * .html
  */
 public class TrackCheckinNotificationService extends IntentService {
 
 	protected static String TAG = "TrackCheckinNotificationService";
 
-	protected ContentResolver contentResolver;
 	protected NotificationManager notificationManager;
 	protected String[] projection;
 
@@ -45,7 +46,6 @@ public class TrackCheckinNotificationService extends IntentService {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		contentResolver = getContentResolver();
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 	}
 

@@ -22,24 +22,25 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 /**
- * Save {@link SharedPreferences} and provide the option to notify
- * the BackupManager to initiate a backup.
+ * Save {@link SharedPreferences} and provide the option to notify the
+ * BackupManager to initiate a backup.
+ * 
  */
 public class FroyoSharedPreferenceSaver extends LegacySharedPreferenceSaver {
 
-  protected BackupManager backupManager;
-	
-  public FroyoSharedPreferenceSaver(Context context) {
-    super(context);
-    backupManager = new BackupManager(context);
-  }
+	protected BackupManager backupManager;
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void savePreferences(Editor editor, boolean backup) {
-    editor.commit();    
-    backupManager.dataChanged();
-  }
+	public FroyoSharedPreferenceSaver(Context context) {
+		super(context);
+		backupManager = new BackupManager(context);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void savePreferences(Editor editor, boolean backup) {
+		editor.commit();
+		backupManager.dataChanged();
+	}
 }
