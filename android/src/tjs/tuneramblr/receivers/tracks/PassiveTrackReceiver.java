@@ -45,6 +45,7 @@ public abstract class PassiveTrackReceiver extends BroadcastReceiver {
 	protected static final String EXTRA_ARTIST_KEY = "artist";
 	protected static final String EXTRA_ALBUM_KEY = "album";
 	protected static final String EXTRA_TRACK_KEY = "track";
+	protected static final String EXTRA_DURATION_KEY = "duration";
 
 	private static final String EMPTY_STRING = "";
 	private static final String NULL_STRING = null;
@@ -75,8 +76,7 @@ public abstract class PassiveTrackReceiver extends BroadcastReceiver {
 						TuneramblrConstants.MAX_DISTANCE,
 						TuneramblrConstants.MAX_TIME));
 		trackCheckinIntent.putExtra(
-				TuneramblrConstants.EXTRA_TRACK_CHECKIN_TYPE_KEY,
-				CheckinType.USER_LIKE);
+				TuneramblrConstants.EXTRA_TRACK_CHECKIN_TYPE_KEY, checkinType);
 		trackCheckinIntent.putExtra(TuneramblrConstants.EXTRA_TRACK_INFO_KEY,
 				trackInfo);
 		context.startService(trackCheckinIntent);
@@ -106,5 +106,16 @@ public abstract class PassiveTrackReceiver extends BroadcastReceiver {
 	 */
 	protected String pullCommandFromIntent(Intent intent) {
 		return intent.getStringExtra(EXTRA_COMMAND_KEY);
+	}
+
+	/**
+	 * Pulls the duration from the given intent.
+	 * 
+	 * @param intent
+	 *            the intent from which the duration should be pulled
+	 * @return the duration of the track in milliseconds
+	 */
+	protected long pullDurationFromIntent(Intent intent) {
+		return intent.getLongExtra(EXTRA_DURATION_KEY, 0L);
 	}
 }
