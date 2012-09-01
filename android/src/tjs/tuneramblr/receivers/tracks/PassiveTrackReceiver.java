@@ -46,6 +46,7 @@ public abstract class PassiveTrackReceiver extends BroadcastReceiver {
 	protected static final String EXTRA_ALBUM_KEY = "album";
 	protected static final String EXTRA_TRACK_KEY = "track";
 	protected static final String EXTRA_DURATION_KEY = "duration";
+	protected static final String EXTRA_PLAYING_KEY = "playing";
 
 	private static final String EMPTY_STRING = "";
 	private static final String NULL_STRING = null;
@@ -117,5 +118,16 @@ public abstract class PassiveTrackReceiver extends BroadcastReceiver {
 	 */
 	protected long pullDurationFromIntent(Intent intent) {
 		return intent.getLongExtra(EXTRA_DURATION_KEY, 0L);
+	}
+
+	/**
+	 * Pulls the playing value from the supplied intent
+	 * 
+	 * @param intent
+	 *            the intent from which the playing value should be pulled
+	 * @return the playing state of the current track
+	 */
+	protected boolean pullPlayingFromIntent(Intent intent) {
+		return intent.getBooleanExtra(EXTRA_PLAYING_KEY, false);
 	}
 }

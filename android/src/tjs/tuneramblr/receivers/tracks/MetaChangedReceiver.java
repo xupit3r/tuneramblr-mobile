@@ -21,8 +21,10 @@ import tjs.tuneramblr.meta.model.TrackInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 
+/**
+ * Receives and interprets track metadata
+ */
 public class MetaChangedReceiver extends PassiveTrackReceiver {
 
 	private static final String TAG = "MetaChangedReceiver";
@@ -35,25 +37,65 @@ public class MetaChangedReceiver extends PassiveTrackReceiver {
 			BLANK_ALBUM, BLANK_TITLE);
 	private static long lastTrackDuration = 1L;
 	private static long lastTrackTimestamp = 1L;
+	private static long trackPausedTimestamp = 1L;
+	private static boolean wasPaused = false;
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.i(TAG, "Received some track info: "
-				+ pullTrackInfoFromIntent(intent));
-
-		long currentTimestamp = System.currentTimeMillis();
+		long currentTrackTimestamp = System.currentTimeMillis();
 		long currentTrackDuration = pullDurationFromIntent(intent);
 		TrackInfo currentTrackInfo = pullTrackInfoFromIntent(intent);
+		boolean playing = pullPlayingFromIntent(intent);
 
-		if (wasTrackSkipped(currentTimestamp)) {
-			// we skipped this track, record it!
-			submitTrack(context, lastTrackInfo, CheckinType.SKIP);
+		if (wasTrackPaused(currentTrackInfo, lastTrackInfo, playing)) {
+			// the track was paused
+			trackPausedTimestamp = System.currentTimeMillis();
+			wasPaused = true;
+		} else if (wasPaused && currentTrackInfo.equals(lastTrackInfo)) {
+			// the track was resumed
+			currentTrackTimestamp = System.currentTimeMillis()
+					- (trackPausedTimestamp - lastTrackTimestamp);
+			wasPaused = false;
+		} else if (!currentTrackInfo.equals(lastTrackInfo)) {
+			long currentTime = System.currentTimeMillis();
+			if (wasPaused) {
+				// if we were previously paused, we need to adjust the timestamp
+				// of the track to resemble the correct elapsed time
+				lastTrackTimestamp = getShiftedTrackTimestamp(currentTime,
+						trackPausedTimestamp, lastTrackTimestamp);
+			}
+
+			if (wasTrackSkipped(currentTime)) {
+				// we skipped this track, record it!
+				submitTrack(context, lastTrackInfo, CheckinType.SKIP);
+			}
 		}
 
 		lastTrackInfo = currentTrackInfo;
 		lastTrackDuration = currentTrackDuration;
-		lastTrackTimestamp = currentTimestamp;
+		lastTrackTimestamp = currentTrackTimestamp;
 
+	}
+
+	/*
+	 * shifts a track timestamp to the appropriate time upon resume
+	 * 
+	 * @return the time in milliseconds that the track started after the resume
+	 * time
+	 */
+	private long getShiftedTrackTimestamp(long currentTime, long pausedTime,
+			long trackTimestamp) {
+		return currentTime - (pausedTime - trackTimestamp);
+	}
+
+	/*
+	 * determine if a track has been paused
+	 * 
+	 * @return true if the track has been paused, false otherwise
+	 */
+	private boolean wasTrackPaused(TrackInfo currentTrack, TrackInfo lastTrack,
+			boolean playing) {
+		return currentTrack.equals(lastTrack) && !playing;
 	}
 
 	/*
