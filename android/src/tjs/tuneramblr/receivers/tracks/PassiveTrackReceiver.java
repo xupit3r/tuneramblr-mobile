@@ -47,6 +47,8 @@ public abstract class PassiveTrackReceiver extends BroadcastReceiver {
 	protected static final String EXTRA_TRACK_KEY = "track";
 	protected static final String EXTRA_DURATION_KEY = "duration";
 	protected static final String EXTRA_PLAYING_KEY = "playing";
+	protected static final String EXTRA_PLAY_STATE_KEY = "playstate";
+	protected static final String EXTRA_POSITION_KEY = "position";
 
 	private static final String EMPTY_STRING = "";
 	private static final String NULL_STRING = null;
@@ -129,5 +131,40 @@ public abstract class PassiveTrackReceiver extends BroadcastReceiver {
 	 */
 	protected boolean pullPlayingFromIntent(Intent intent) {
 		return intent.getBooleanExtra(EXTRA_PLAYING_KEY, false);
+	}
+
+	/**
+	 * Pulls the playstate from the provided intent
+	 * 
+	 * @param intent
+	 *            the intent from which the playstate should be pulled
+	 * @return the current play state of the track (false if the track is
+	 *         paused, true otherwise)
+	 */
+	protected boolean pullPlayStateFromIntent(Intent intent) {
+		return intent.getBooleanExtra(EXTRA_PLAY_STATE_KEY, false);
+	}
+
+	/**
+	 * Pulls the current position (in time) in the track.
+	 * 
+	 * @param intent
+	 *            the intent from which the track's time position should be
+	 *            pulled
+	 * @return the current position (in time) of the track
+	 */
+	protected long pullPositionFromIntent(Intent intent) {
+		return intent.getLongExtra(EXTRA_POSITION_KEY, 0L);
+	}
+
+	/**
+	 * Pulls the action associated with this intent.
+	 * 
+	 * @param intent
+	 *            the intent from which the action should be pulled
+	 * @return the action associated with this intent
+	 */
+	protected String pullActionFromIntent(Intent intent) {
+		return intent.getAction();
 	}
 }

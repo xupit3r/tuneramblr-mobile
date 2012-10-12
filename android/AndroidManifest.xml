@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-		
+
         <!-- RECEIVERS -->
         <receiver android:name=".receivers.BootReceiver" >
         </receiver>
@@ -75,44 +75,40 @@
                 <action android:name="com.real.IMP.playstatechanged" />
                 <action android:name="com.real.IMP.playbackcomplete" />
                 <action android:name="com.real.IMP.queuechanged" />
-                
+
                 <!-- Amazon MP3 -->
                 <action android:name="com.amazon.mp3.metachanged" />
                 <action android:name="com.amazon.mp3.playstatechanged" />
-                <action android:name="com.amazon.mp3.metachanged" />
+                <action android:name="com.amazon.mp3.queuechanged" />
                 <action android:name="com.amazon.mp3.playbackcomplete" />
-                
+
                 <!-- rdio -->
                 <action android:name="com.rdio.android.metachanged" />
                 <action android:name="com.rdio.android.playstatechanged" />
-                <action android:name="com.rdio.android.metachanged" />
-                <action android:name="com.rdio.android.playbackcomplete" />
-                
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".receivers.tracks.PlaybackCompleteReceiver" >
-            <intent-filter>
-                <action android:name="com.android.music.playbackcomplete" />
-                <action android:name="com.miui.player.playbackcomplete" />
-                <action android:name="com.htc.music.playbackcomplete" />
-                <action android:name="com.nullsoft.winamp.playbackcomplete" />
-                <action android:name="com.real.IMP.playbackcomplete" />
-               	<action android:name="com.amazon.mp3.playbackcomplete" />
+                <action android:name="com.rdio.android.queuechanged" />
                 <action android:name="com.rdio.android.playbackcomplete" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.tracks.MetaChangedReceiver" >
+        <receiver android:name=".receivers.tracks.MediaInfoReceiver" >
             <intent-filter>
                 <action android:name="com.android.music.metachanged" />
                 <action android:name="com.miui.player.metachanged" />
                 <action android:name="com.htc.music.metachanged" />
                 <action android:name="com.nullsoft.winamp.metachanged" />
                 <action android:name="com.real.IMP.metachanged" />
-				<action android:name="com.amazon.mp3.metachanged" />
+                <action android:name="com.amazon.mp3.metachanged" />
                 <action android:name="com.rdio.android.metachanged" />
+                
+                <action android:name="com.android.music.playstatechanged" />
+                <action android:name="com.miui.player.playstatechanged" />
+                <action android:name="com.htc.music.playstatechanged" />
+                <action android:name="com.nullsoft.winamp.playstatechanged" />
+                <action android:name="com.real.IMP.playstatechanged" />
+                <action android:name="com.amazon.mp3.playstatechanged" />
+                <action android:name="com.rdio.android.playstatechanged" />
             </intent-filter>
         </receiver>
-        
+
         <!-- SERVICES -->
         <service android:name=".services.TrackCheckinNotificationService" >
         </service>
