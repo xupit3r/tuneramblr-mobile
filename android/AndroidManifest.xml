@@ -118,6 +118,7 @@
             android:name=".services.LoginService"
             android:label="LoginService" >
         </service>
+        <activity android:name="SettingsActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -15,38 +15,48 @@ public final class R {
         public static final int tr_logo=0x7f020001;
     }
     public static final class id {
-        public static final int addButton=0x7f050001;
-        public static final int albumNameText=0x7f050005;
-        public static final int artistNameText=0x7f050004;
-        public static final int checkin_fragment=0x7f050000;
-        public static final int fragment_container=0x7f05000d;
-        public static final int imageView1=0x7f050008;
-        public static final int loginButton=0x7f050007;
-        public static final int login_fragment=0x7f050006;
-        public static final int passwordInput=0x7f05000a;
-        public static final int takePhotoBtn=0x7f050002;
-        public static final int textView1=0x7f05000c;
-        public static final int trackNameText=0x7f050003;
-        public static final int usernameInput=0x7f050009;
-        public static final int usernameLabel=0x7f05000b;
+        public static final int addButton=0x7f070001;
+        public static final int albumNameText=0x7f070005;
+        public static final int artistNameText=0x7f070004;
+        public static final int checkin_fragment=0x7f070000;
+        public static final int fragment_container=0x7f07000d;
+        public static final int imageView1=0x7f070008;
+        public static final int loginButton=0x7f070007;
+        public static final int login_fragment=0x7f070006;
+        public static final int opt_settings=0x7f07000e;
+        public static final int passwordInput=0x7f07000a;
+        public static final int takePhotoBtn=0x7f070002;
+        public static final int textView1=0x7f07000c;
+        public static final int trackNameText=0x7f070003;
+        public static final int usernameInput=0x7f070009;
+        public static final int usernameLabel=0x7f07000b;
     }
     public static final class layout {
         public static final int checkin=0x7f030000;
         public static final int login=0x7f030001;
         public static final int main=0x7f030002;
     }
+    public static final class menu {
+        public static final int main_menu=0x7f060000;
+    }
     public static final class string {
-        public static final int addBtn=0x7f040001;
-        public static final int albumNameStr=0x7f04000b;
-        public static final int app_name=0x7f040000;
-        public static final int artistNameStr=0x7f04000a;
-        public static final int loginBtn=0x7f040006;
-        public static final int logoDescription=0x7f040003;
-        public static final int passwordStr=0x7f040008;
-        public static final int songSubmitted=0x7f040005;
-        public static final int takePhoto=0x7f040004;
-        public static final int trackNameStr=0x7f040009;
-        public static final int userDefStr=0x7f040002;
-        public static final int usernameStr=0x7f040007;
+        public static final int addBtn=0x7f050001;
+        public static final int albumNameStr=0x7f05000b;
+        public static final int app_name=0x7f050000;
+        public static final int artistNameStr=0x7f05000a;
+        public static final int loginBtn=0x7f050006;
+        public static final int logoDescription=0x7f050003;
+        public static final int passwordStr=0x7f050008;
+        public static final int pref_back_track_info=0x7f05000c;
+        public static final int pref_back_track_info_summ=0x7f05000d;
+        public static final int settings_title=0x7f05000e;
+        public static final int songSubmitted=0x7f050005;
+        public static final int takePhoto=0x7f050004;
+        public static final int trackNameStr=0x7f050009;
+        public static final int userDefStr=0x7f050002;
+        public static final int usernameStr=0x7f050007;
+    }
+    public static final class xml {
+        public static final int preferences=0x7f040000;
     }
 }

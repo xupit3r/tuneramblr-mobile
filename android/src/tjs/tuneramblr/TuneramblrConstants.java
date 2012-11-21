@@ -131,4 +131,6 @@ public class TuneramblrConstants {
 	public static String TRACK_INFO_UPDATE_INTENT = "tjs.tuneramblr.services.TrackInfoUpdateService";
 
 	public static final double COMPLETED_TRACK_PERCENTAGE = .75;
+
+	public static final String PASSIVELY_COLLECT_TRACK_INFO_KEY = "pref_back_track_info";
 }

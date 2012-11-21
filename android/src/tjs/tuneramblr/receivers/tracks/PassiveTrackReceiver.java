@@ -24,6 +24,8 @@ import tjs.tuneramblr.services.TrackCheckinService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 /**
  * Encapsulates the shared functionality amongst the track broadcast receivers
@@ -83,6 +85,22 @@ public abstract class PassiveTrackReceiver extends BroadcastReceiver {
 		trackCheckinIntent.putExtra(TuneramblrConstants.EXTRA_TRACK_INFO_KEY,
 				trackInfo);
 		context.startService(trackCheckinIntent);
+	}
+
+	/**
+	 * Indicates user's preference for recording track information passively (in
+	 * the background).
+	 * 
+	 * @param context
+	 *            the current application context
+	 * @return true of the user indicated that track information can be
+	 *         collected passively, false otherwise
+	 */
+	protected boolean isPassivelyRecordTrackInfo(Context context) {
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		return sharedPref.getBoolean(
+				TuneramblrConstants.PASSIVELY_COLLECT_TRACK_INFO_KEY, false);
 	}
 
 	/**

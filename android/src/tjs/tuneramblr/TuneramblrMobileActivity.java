@@ -49,6 +49,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 /**
  * This is the main activity for tuneramblr mobile
@@ -550,6 +553,27 @@ public class TuneramblrMobileActivity extends FragmentActivity {
 		if (requestCode == TAKE_PHOTO_CODE && resultCode == RESULT_OK) {
 			// TODO: if something bad happens interrupt the application, i
 			// guess...
+		}
+	}
+
+	// Main Options Menu Stuff //
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.opt_settings:
+			Intent intent = new Intent(this, SettingsActivity.class);
+			startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 	}
 

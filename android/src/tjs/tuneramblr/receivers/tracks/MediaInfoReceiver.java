@@ -41,37 +41,40 @@ public class MediaInfoReceiver extends PassiveTrackReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		long currentTrackDuration = pullDurationFromIntent(intent);
-		long currentTrackPosition = pullPositionFromIntent(intent);
-		TrackInfo currentTrackInfo = pullTrackInfoFromIntent(intent);
-		String intentAction = pullActionFromIntent(intent);
-		String genericAction = getGenericAction(intentAction);
+		if (isPassivelyRecordTrackInfo(context)) {
+			long currentTrackDuration = pullDurationFromIntent(intent);
+			long currentTrackPosition = pullPositionFromIntent(intent);
+			TrackInfo currentTrackInfo = pullTrackInfoFromIntent(intent);
+			String intentAction = pullActionFromIntent(intent);
+			String genericAction = getGenericAction(intentAction);
 
-		if (PLAY_STATE_CHANGED_ACTION.equals(genericAction)) {
-			boolean paused = !pullPlayStateFromIntent(intent);
-			if (!paused) {
-				lastTrackPosition = currentTrackPosition;
+			if (PLAY_STATE_CHANGED_ACTION.equals(genericAction)) {
+				boolean paused = !pullPlayStateFromIntent(intent);
+				if (!paused) {
+					lastTrackPosition = currentTrackPosition;
+					lastTrackTimestamp = System.currentTimeMillis();
+				}
+			} else if (currentTrackPosition < 0) {
+				/*
+				 * a track's position will only be -1 when the metadata changes
+				 * and a new track is beginning. either the track was skipped or
+				 * it was completed. if the track was skipped, record it as
+				 * such.
+				 */
+				long elapsedTime = System.currentTimeMillis()
+						- lastTrackTimestamp;
+				if (wasTrackSkipped(lastTrackPosition, lastTrackDuration,
+						elapsedTime)) {
+					submitTrack(context, lastTrackInfo, CheckinType.SKIP);
+				}
+
+				/* only update this if the track information has changed */
+				lastTrackInfo = currentTrackInfo;
+				lastTrackDuration = currentTrackDuration;
+				lastTrackPosition = 0;
 				lastTrackTimestamp = System.currentTimeMillis();
 			}
-		} else if (currentTrackPosition < 0) {
-			/*
-			 * a track's position will only be -1 when the metadata changes and
-			 * a new track is beginning. either the track was skipped or it was
-			 * completed. if the track was skipped, record it as such.
-			 */
-			long elapsedTime = System.currentTimeMillis() - lastTrackTimestamp;
-			if (wasTrackSkipped(lastTrackPosition, lastTrackDuration,
-					elapsedTime)) {
-				submitTrack(context, lastTrackInfo, CheckinType.SKIP);
-			}
-
-			/* only update this if the track information has changed */
-			lastTrackInfo = currentTrackInfo;
-			lastTrackDuration = currentTrackDuration;
-			lastTrackPosition = 0;
-			lastTrackTimestamp = System.currentTimeMillis();
 		}
-
 	}
 
 	/*
