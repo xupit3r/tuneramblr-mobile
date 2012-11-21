@@ -91,7 +91,7 @@ public class TrackCheckinService extends IntentService {
 
 			// pull content out of the intents
 			String userDefString = intent
-					.getStringExtra(TuneramblrConstants.EXTRA_USEDEF_KEY);
+					.getStringExtra(TuneramblrConstants.EXTRA_DOING_WHAT_KEY);
 			Uri imageUri = intent
 					.getParcelableExtra(TuneramblrConstants.EXTRA_IMG_URI_KEY);
 			Location userLocation = intent

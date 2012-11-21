@@ -104,6 +104,7 @@ public class TuneramblrConstants {
 
 	// tuneramblr metadata keys
 	public static String EXTRA_USEDEF_KEY = "userdef";
+	public static String EXTRA_DOING_WHAT_KEY = "doing_what";
 	public static String EXTRA_IMG_URI_KEY = "imguri";
 	public static String EXTRA_LOCATION_KEY = "user_location";
 	public static String EXTRA_TRACK_CHECKIN_TYPE_KEY = "checkin_type";

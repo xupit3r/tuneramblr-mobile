@@ -45,6 +45,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +71,7 @@ public class CheckinFragment extends Fragment {
 	protected TextView trackNameText;
 	protected TextView artistNameText;
 	protected TextView albumNameText;
+	protected EditText doingWhatText;
 
 	public CheckinFragment() {
 		super();
@@ -92,6 +94,7 @@ public class CheckinFragment extends Fragment {
 		trackNameText = (TextView) view.findViewById(R.id.trackNameText);
 		artistNameText = (TextView) view.findViewById(R.id.artistNameText);
 		albumNameText = (TextView) view.findViewById(R.id.albumNameText);
+		doingWhatText = (EditText) view.findViewById(R.id.doing_what);
 
 		// update the track display
 		populateTrackDisplay(getActivity().getApplicationContext());
@@ -105,18 +108,11 @@ public class CheckinFragment extends Fragment {
 				ILastLocationFinder locationFinder = PlatformSpecificImplementationFactory
 						.getLastLocationFinder(v.getContext());
 
-				// this is the only thing coming from the UI at the moment
-				// we will be grabbing the rest of the stuff automatically
-				// FIXME: what do I want to do about this feature?
-				String userDefString = "";
-
 				TrackInfoDS tids = new TrackInfoDS(v.getContext());
 
 				// build an Intent to send over to the checkin service
 				Intent trackCheckinIntent = new Intent(v.getContext(),
 						TrackCheckinService.class);
-				trackCheckinIntent.putExtra(
-						TuneramblrConstants.EXTRA_USEDEF_KEY, userDefString);
 				trackCheckinIntent.putExtra(
 						TuneramblrConstants.EXTRA_IMG_URI_KEY, imageUri);
 				trackCheckinIntent.putExtra(
@@ -127,6 +123,9 @@ public class CheckinFragment extends Fragment {
 				trackCheckinIntent.putExtra(
 						TuneramblrConstants.EXTRA_TRACK_CHECKIN_TYPE_KEY,
 						CheckinType.USER_LIKE);
+				trackCheckinIntent.putExtra(
+						TuneramblrConstants.EXTRA_DOING_WHAT_KEY, doingWhatText
+								.getText().toString());
 
 				tids.open();
 				trackCheckinIntent.putExtra(
@@ -143,6 +142,9 @@ public class CheckinFragment extends Fragment {
 
 				// clear the image URI
 				imageUri = null;
+
+				// clear the text area
+				doingWhatText.setText("");
 			}
 		});
 
